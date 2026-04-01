@@ -41,50 +41,52 @@ switch ($method) {
         ];
         echo json_encode($quote_arr);
       } else {
-        // Check for the extra credit random parameter
-        if (isset($_GET["random"])) {
-          $quoteModel->random = $_GET["random"];
-        }
+        echo json_encode(["message" => "No Quotes Found"]);
+      }
+    } else {
+      // Check for the extra credit random parameter
+      if (isset($_GET["random"])) {
+        $quoteModel->random = $_GET["random"];
+      }
 
-        if (isset($_GET["author_id"])) {
-          $quoteModel->author_id = $_GET["author_id"];
-        }
-        if (isset($_GET["category_id"])) {
-          $quoteModel->category_id = $_GET["category_id"];
-        }
+      if (isset($_GET["author_id"])) {
+        $quoteModel->author_id = $_GET["author_id"];
+      }
+      if (isset($_GET["category_id"])) {
+        $quoteModel->category_id = $_GET["category_id"];
+      }
 
-        $result = $quoteModel->read();
-        $num = $result->rowCount();
+      $result = $quoteModel->read();
+      $num = $result->rowCount();
 
-        if ($num > 0) {
-          // If random=true was used, only return the object, not an array
-          if (isset($_GET["random"]) && $_GET["random"] === "true") {
-            $row = $result->fetch(PDO::FETCH_ASSOC);
-            echo json_encode([
+      if ($num > 0) {
+        // If random=true was used, only return the object, not an array
+        if (isset($_GET["random"]) && $_GET["random"] === "true") {
+          $row = $result->fetch(PDO::FETCH_ASSOC);
+          echo json_encode([
+            "id" => $row["id"],
+            "quote" => $row["quote"],
+            "author" => $row["author_name"],
+            "category" => $row["category_name"],
+          ]);
+        } else {
+          $quote_arr = [];
+          while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $quote_item = [
               "id" => $row["id"],
               "quote" => $row["quote"],
               "author" => $row["author_name"],
               "category" => $row["category_name"],
-            ]);
-          } else {
-            $quote_arr = [];
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-              $quote_item = [
-                "id" => $row["id"],
-                "quote" => $row["quote"],
-                "author" => $row["author_name"],
-                "category" => $row["category_name"],
-              ];
-              array_push($quote_arr, $quote_item);
-            }
-            echo json_encode($quote_arr);
+            ];
+            array_push($quote_arr, $quote_item);
           }
-        } else {
-          echo json_encode(["message" => "No Quotes Found"]);
+          echo json_encode($quote_arr);
         }
+      } else {
+        echo json_encode(["message" => "No Quotes Found"]);
       }
-      break;
     }
+    break;
 
   case "POST":
     if (

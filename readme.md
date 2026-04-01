@@ -2,8 +2,6 @@
 By Autumn Wertz
 Link to Render: https://inf653-midterm-444d.onrender.com/
 
----
-
 ## Project Overview
 This project consists of a RESTful API built with **PHP** and **PostgreSQL**. It manages a relational database of quotes, authors, and categories. The application is designed to handle standard CRUD operations through JSON-based endpoints and is hosted on the **Render** cloud platform.
 
@@ -14,8 +12,6 @@ The system utilizes a Model-View-Controller (MVC) inspired directory structure t
 * **`config/`**: Contains the `Database.php` class for managing PostgreSQL connections.
 * **`root/`**: Contains the entry point `index.php` and the individual API directories for routing.
 * **Environment**: Development was conducted within a **Dockerized** Apache/PHP environment, with system dependencies managed via **NixOS**.
-
----
 
 ## API Documentation
 
@@ -41,16 +37,12 @@ The system utilizes a Model-View-Controller (MVC) inspired directory structure t
 * **`PUT /categories/`**: Updates an existing category. Requires `id` and `category`.
 * **`DELETE /categories/`**: Deletes a category. Requires `id`.
 
----
-
 ## Database Schema
 The PostgreSQL database consists of three primary tables:
 
 1.  **`authors`**: `id` (Serial PK), `author` (VARCHAR)
 2.  **`categories`**: `id` (Serial PK), `category` (VARCHAR)
 3.  **`quotes`**: `id` (Serial PK), `quote` (TEXT), `author_id` (FK), `category_id` (FK)
-
----
 
 ## Disclosure
 This API is hosted on a Render Free Tier instance. If the service has been inactive, the initial request may experience a delay of thirty seconds while the container instances spin up.

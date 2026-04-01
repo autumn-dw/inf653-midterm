@@ -1,5 +1,5 @@
 # INF 653 Midterm Project
-By Autumn Wertz
+By Autumn Wertz \
 Link to Render: https://inf653-midterm-444d.onrender.com/
 
 ## Project Overview
